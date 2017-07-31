@@ -1,0 +1,21 @@
+{
+  "name": "dough-microservice",
+  "version": "0.0.1",
+  "repository": "https://bitbucket.org/lyndseypadget/dough-microservice",
+  "author": "Lyndsey Padget",
+  "license": "MIT",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "^4.13.3",
+    "lodash": "^3.10.1",
+    "lodash-node": "^3.10.1",
+    "node-env-file": "^0.1.7",
+    "body-parser": "1.14.1",
+    "line-by-line": "0.1.4",
+    "async": "1.4.2",
+    "request": "2.65.0"
+  }
+}

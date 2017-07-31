@@ -9,9 +9,6 @@ var server = require('http').Server(app);
 var env = require('node-env-file');
 env('./.env');
 
-//For testing
-module.exports = app;
-
 /* Route Imports */
 var api = require('./controllers/apiController');
 // var dough = require('./controllers/doughController');
@@ -65,7 +62,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // Unauthorized API Routes
-app.get('/info', api.getInfo);
+app.get('/', api.getInfo);
 
 server.listen(process.env.PORT, function() {
   console.log('Server listening on port:' + this.address().port);

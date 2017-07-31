@@ -1,8 +1,6 @@
 var express = require('express');
 var app = express();
-// var _ = require('lodash-node');
 var bodyParser = require('body-parser');
-// var path = require('path');
 
 var server = require('http').Server(app);
 
@@ -11,7 +9,6 @@ env('./.env');
 
 /* Route Imports */
 var api = require('./controllers/apiController');
-// var dough = require('./controllers/doughController');
 
 var allowCORS = function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');

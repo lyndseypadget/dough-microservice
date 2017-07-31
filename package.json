@@ -9,10 +9,11 @@
     "start": "node app.js"
   },
   "dependencies": {
-    "express": "^4.13.3",
-    "lodash": "^3.10.1",
-    "lodash-node": "^3.10.1",
-    "node-env-file": "^0.1.7",
+    "express": "4.13.3",
+    "async": "2.5.0",
+    "lodash": "4.17.4",
+    "moment": "2.18.1",
+    "node-env-file": "0.1.7",
     "body-parser": "1.14.1",
     "line-by-line": "0.1.4",
     "async": "1.4.2",

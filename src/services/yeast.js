@@ -18,7 +18,11 @@ function validateSugarMeasurement (sugar, done) {
   done(null);
 }
 
-function validate (water, sugar, done) {
+function validate (water, sugar, yeast, done) {
+
+  if(yeast.type !== "activeDry")
+    done("Unknown yeast type")
+
   async.series([
     function (cb) { validateWaterTemp(water, cb); },
     function (cb) { validateSugarMeasurement(sugar, cb); }
@@ -29,7 +33,7 @@ function validate (water, sugar, done) {
 
 function stir(water, sugar, yeast, done) {
   let yeastMixture = {
-    beginTime: moment.now()
+    beginTime: moment()
   }
 
   //MOCK: Simulate flipping this switch, normally a job would do it
@@ -40,27 +44,24 @@ function stir(water, sugar, yeast, done) {
 
 function inspectYeastMixture (yeastMixture, done) {
   if(!yeastMixture.hasFrothyBubbles) {
-    done("The Yeast is dead, Jim!");
+    return done("The Yeast is dead, Jim!");
   }
-  done(null);
+  done(null, yeastMixture);
 }
 
-exports.type = "activeDry"
-
-exports.createProof = function (water, sugar, yeast, done) {
+//Returns a yeastMixture object
+module.exports.createProof = function (water, sugar, yeast, done) {
   async.waterfall([
-    function (cb) { validate(water, sugar, cb); },
+    function (cb) { validate(water, sugar, yeast, cb); },
     function (water, sugar, cb) { stir(water, sugar, yeast, cb); }
-  ], function(err) {
-    done(err, water, sugar);
-  });
+  ], done);
 }
 
-exports.testProof = function(yeastMixture, done) {
-  let timeDiff = moment.now().diff(yeastMixture.beginTime, 'minutes')
+module.exports.testProof = function(yeastMixture, done) {
+  let timeDiff = moment().diff(yeastMixture.beginTime, 'seconds')
   if(timeDiff < 6) {
     let minutesRemaining = 6 - timeDiff;
-    done(`Proof is not ready, wait approximately ${minutesRemaining} more minutes.`);
+    return done(`Proof is not ready, wait approximately ${minutesRemaining} more minutes.`);
   }
 
   inspectYeastMixture(yeastMixture, done);

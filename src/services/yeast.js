@@ -33,36 +33,44 @@ function validate (water, sugar, yeast, done) {
 
 function stir(water, sugar, yeast, done) {
   let yeastMixture = {
+    hasFrothyBubbles: false,
     beginTime: moment()
   }
-
-  //MOCK: Simulate flipping this switch, normally a job would do it
-  yeastMixture.hasFrothyBubbles = true
 
   done(null, yeastMixture);
 }
 
 function inspectYeastMixture (yeastMixture, done) {
   if(!yeastMixture.hasFrothyBubbles) {
-    return done("The Yeast is dead, Jim!");
+    return done("The yeast is dead, Jim!", yeastMixture);
   }
   done(null, yeastMixture);
 }
 
 //Returns a yeastMixture object
-module.exports.createProof = function (water, sugar, yeast, done) {
+function createProof(water, sugar, yeast, done) {
   async.waterfall([
     function (cb) { validate(water, sugar, yeast, cb); },
     function (water, sugar, cb) { stir(water, sugar, yeast, cb); }
   ], done);
 }
 
-module.exports.testProof = function(yeastMixture, done) {
-  let timeDiff = moment().diff(yeastMixture.beginTime, 'seconds')
+//Returns a yeastMixture object
+function testProof(yeastMixture, done) {
+  let timeDiff = moment().diff(yeastMixture.beginTime, 'seconds') //TODO change to minutes
   if(timeDiff < 6) {
     let minutesRemaining = 6 - timeDiff;
-    return done(`Proof is not ready, wait approximately ${minutesRemaining} more minutes.`);
+    return done(`Proof is not ready, wait approximately ${minutesRemaining} more minutes.`, yeastMixture);
   }
+  yeastMixture.endTime = moment.now()
+
+  //Always pretend that the yeast mixture is A-Ok
+  yeastMixture.hasFrothyBubbles = true
 
   inspectYeastMixture(yeastMixture, done);
+}
+
+module.exports = {
+  createProof,
+  testProof
 }

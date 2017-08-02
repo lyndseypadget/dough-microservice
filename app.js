@@ -27,8 +27,12 @@ app.use(bodyParser.json());
 //-----------------------------------------------
 //Routes
 //-----------------------------------------------
+//TODO some routes would have auth middleware
 app.get('/', apiController.getInfo);
 app.post('/dough', doughController.createDough);
+app.get('/dough/:id', doughController.retrieveDough);
+app.patch('/dough/:id', doughController.updateDough);
+app.delete('/dough/:id', doughController.deleteDough);
 //-----------------------------------------------
 
 server.listen(process.env.PORT, function() {

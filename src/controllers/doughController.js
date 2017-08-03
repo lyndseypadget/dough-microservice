@@ -6,7 +6,7 @@ var yeast = {type: "activeDry"}
 
 exports.createDough = function(req, res) {
 	doughService.create(water, sugar, yeast, function(err, doughMixture) {
-		if(err) { return res.status(500).send(); }
+		if(err) { return res.status(500).send(err); }
 		res.status(202).send(doughMixture);
 	});
 }

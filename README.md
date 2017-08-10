@@ -1,2 +1,2 @@
 # dough-microservice
-A microservice that makes dough, such as pizza dough
+A NodeJS microservice that makes pizza dough, with a few tests
